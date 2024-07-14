@@ -1,2 +1,0 @@
-# Mnemosyne
-Library Management System
