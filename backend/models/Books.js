@@ -5,6 +5,7 @@ const schema = new mongoose.Schema({
     ISBN:{
         type:String,
         required:[true, "Please enter your ISBN No."],
+        unique:true,
     },
     title:{
         type:String,
@@ -38,7 +39,6 @@ const schema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
 })
 
 export const Books = mongoose.model("Books", schema, "Books");

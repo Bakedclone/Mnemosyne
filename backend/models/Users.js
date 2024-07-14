@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
     },
     phoneNumber: {
         type: Number,
-      },
+    },
     password:{
         type:String,
         required: [true, "Please enter your password"],
@@ -47,6 +47,10 @@ const schema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    emailSub : {
+        type : Boolean,
+        default : true
     },
     resetPasswordToken: String, 
     resetPasswordExpire: String,
