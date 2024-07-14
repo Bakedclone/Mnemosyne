@@ -1,27 +1,19 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-    
     user_id:{
         type: mongoose.Schema.Types.String,
-        ref: Users,
     },
     book_id:{
         type: mongoose.Schema.Types.String,
-        ref: Books,
     },
     borrow_date:{
-        type: Date,
+        type: Number,
         default: Date.now,
-    },
-    due_date:{
-        type: Date,
-    },
-    return_date: {
-        type: Date,
     },
     late_fee: {
         type: Number,
+        default : 0
     }
 })
 

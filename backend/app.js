@@ -23,10 +23,12 @@ app.use(express.urlencoded({
 import users from "./routes/usersRoutes.js";
 import bookUpdates from "./routes/bookUpdates.routes.js";
 import books from "./routes/booksRoutes.js";
+import borrow from "./routes/borrow.routes.js"
 
 app.use("/api/v1", users);
 app.use("/api/v1", books);
 app.use("/api/v1", bookUpdates);
+app.use("/api/v1", borrow);
 
 app.get("/", (req, res) =>
     res.send(
