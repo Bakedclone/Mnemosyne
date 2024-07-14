@@ -1,6 +1,7 @@
-// import { Rooms } from "../models/Rooms.js";
 import { Books } from "../models/Books.js";
 import ErrorHandler from "../utils/errorHandler.js"
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "cloudinary";
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 
 export const getAllBooks = async (req, res, next) => {
@@ -23,6 +24,29 @@ export const addBook = catchAsyncError(async(req, res, next)=> {
     if(findbook.length > 0)
     return next(new ErrorHandler("ISBN is already exsist", 400));
 
+    const files = req.files;
+
+    const images = [];
+    // Traverse through each file and upload to Cloudinary
+    for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+
+        // Convert file to data URI
+        const dataUri = getDataUri(file);
+
+        // Upload to Cloudinary
+        const mycloud = await cloudinary.v2.uploader.upload(dataUri.content);
+
+        // Store image details in the array
+        const img = {
+            public_id: mycloud.public_id,
+            url: mycloud.secure_url,
+        };
+
+        // Push img into images array
+        images.push(img);
+    }
+
     const books = await Books.create({
         ISBN, 
         title, 
@@ -31,7 +55,8 @@ export const addBook = catchAsyncError(async(req, res, next)=> {
         year, 
         genre, 
         quantity, 
-        available
+        available,
+        images
     });
 
     res.status(200).json({
@@ -41,24 +66,24 @@ export const addBook = catchAsyncError(async(req, res, next)=> {
     });
 });
 
-// export const removeRoom = catchAsyncError(async(req, res, next)=> {
+export const removeBook = catchAsyncError(async(req, res, next)=> {
 
-//     const room = await Rooms.findById(req.body._id);
+    const book = await Books.findOne({"ISBN" : req.body.ISBN});
 
-//     if(!room)
-//         return next(new ErrorHandler("Room Not Found", 400));
+    if(!book)
+        return next(new ErrorHandler("Book Not Found", 400));
 
-//     await room.deleteOne();
+    await book.deleteOne();
 
-//     res.status(200).json({
-//         success: true,
-//         message: "Room Remove Successfull."
-//     });
-// });
+    res.status(200).json({
+        success: true,
+        message: "Book Remove Successfully."
+    });
+});
 
-// export const updateRoom = catchAsyncError(async (req, res, next)=> {
+// export const updateBook = catchAsyncError(async (req, res, next)=> {
     
-//     const { Propertyid, MonthlyRent, SharingCapacity, Occupied, facilities, description } = req.body;
+//     const { ISBN, title, author, publisher, year, genre, quantity, available } = req.body;
 
 //     const room = await Rooms.findById(req.body._id);
 //     if(!room)

@@ -1,14 +1,15 @@
 import express from "express";
 // import { addRooms, getAllRooms, getAvaiableRooms,removeRoom, updateRoom } from "../controllers/roomController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
-import { addBook } from "../controllers/bookController.js";
+import { multipleUpload } from "../middlewares/multer.js";
+import { addBook, getAllBooks, removeBook } from "../controllers/bookController.js";
 const router = express.Router();
 
 // Add Book
-router.route("/addbook").post(isAuthenticated, authorizeAdmin, addBook)
+router.route("/addbook").post(isAuthenticated, authorizeAdmin, multipleUpload, addBook)
 
-// // Remove Room
-// router.route("/removeroom").post(isAuthenticated, authorizeAdmin, removeRoom);
+// Remove Room
+router.route("/removebook").post(isAuthenticated, authorizeAdmin, removeBook);
 
 // //  Update Room 
 // router.route("/updateroom").post(isAuthenticated, authorizeAdmin, updateRoom);
@@ -16,7 +17,7 @@ router.route("/addbook").post(isAuthenticated, authorizeAdmin, addBook)
 // // Get Available Rooms
 // router.route("/availablerooms").post(isAuthenticated, authorizeAdmin, getAvaiableRooms);
 
-// // Get All Rooms
-// router.route("/getallrooms").get(isAuthenticated, authorizeAdmin, getAllRooms);
+// Get All Books
+router.route("/getallbooks").get(isAuthenticated, authorizeAdmin, getAllBooks);
 
 export default router;

@@ -34,6 +34,16 @@ const schema = new mongoose.Schema({
         type:Number,
         required:[true, "Please enter your available No."],
     },
+    images: [
+        {
+                public_id : {
+                    type: String,
+                },
+                url: {
+                    type: String,
+                }
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now,
