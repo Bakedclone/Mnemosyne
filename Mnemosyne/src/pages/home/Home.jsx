@@ -1,3 +1,6 @@
+
+import HeroBanner from "./HeroBanner";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +14,11 @@ const Home = () => {
     console.log("Books " + book);
     dispatch(getAllBooks())
   }, [dispatch]);
-  return <div className="container">Home</div>;
+ return (
+    <>
+      <HeroBanner />
+    </>
+  );
 };
 
 export default Home;
