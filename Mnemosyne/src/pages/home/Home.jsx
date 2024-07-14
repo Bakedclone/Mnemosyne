@@ -1,7 +1,10 @@
-import React from "react";
-
+import HeroBanner from "./HeroBanner";
 const Home = () => {
-  return <div className="py-16 container">Home</div>;
+  return (
+    <>
+      <HeroBanner />
+    </>
+  );
 };
 
 export default Home;
