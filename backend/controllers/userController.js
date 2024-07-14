@@ -11,18 +11,17 @@ import { Users } from "../models/Users.js";
 
 export const register = catchAsyncError(async(req, res, next)=> {
 
-    const { _id, email, password } = req.body;
+    const { username, email, password } = req.body;
     
-    if(!_id || !email || !password) 
+    if(!username || !email || !password) 
     return next(new ErrorHandler("Enter all fields", 400));
 
     let user = await Users.findOne({ email });
-
     if (user) return next(new ErrorHandler("User already exist", 409));
 
 
     user = await Users.create({
-        _id,
+        username,
         email,
         password,
     })
