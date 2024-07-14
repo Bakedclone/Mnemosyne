@@ -35,15 +35,8 @@ const schema = new mongoose.Schema({
         enum: ["admin", "user", "librarian"],
         default: "user",
     },
-    borrowings: [ 
-        // {
-        //     book_id: ObjectId(),  // Reference to Books collection
-        //     borrow_date: Date,
-        //     due_date: Date,
-        //     return_date: Date,
-        //     late_fee: Number,
-        // }
-    ],
+    borrowings: [],
+    returnings: [],
     createdAt: {
         type: Date,
         default: Date.now,
