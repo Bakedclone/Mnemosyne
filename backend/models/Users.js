@@ -5,8 +5,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 
 const schema = new mongoose.Schema({
-
-    _id:{
+    username:{
         type:String,
         required:[true, "Please enter your username"]
     },
@@ -24,7 +23,7 @@ const schema = new mongoose.Schema({
     },
     phoneNumber: {
         type: Number,
-      },
+    },
     password:{
         type:String,
         required: [true, "Please enter your password"],
@@ -33,40 +32,25 @@ const schema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ["admin", "user", "tenant"],
+        enum: ["admin", "user", "librarian"],
         default: "user",
     },
-    photo: {
-        public_id : {
-            type: String,
-        },
-        url: {
-            type: String,
-        }
-    },
-    aadharcard: {
-        public_id : {
-            type: String,
-        },
-        url: {
-            type: String,
-        }
-    },
-    pancard: {
-        public_id : {
-            type: String,
-        },
-        url: {
-            type: String,
-        }
-    },
-    subscription: {
-        id: String,
-        status: String,
-    },
+    borrowings: [ 
+        // {
+        //     book_id: ObjectId(),  // Reference to Books collection
+        //     borrow_date: Date,
+        //     due_date: Date,
+        //     return_date: Date,
+        //     late_fee: Number,
+        // }
+    ],
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    emailSub : {
+        type : Boolean,
+        default : true
     },
     resetPasswordToken: String, 
     resetPasswordExpire: String,
