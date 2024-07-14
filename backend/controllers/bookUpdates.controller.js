@@ -156,7 +156,7 @@ const sendMail = (mailOptions) => {
     });
 }
 // Used for sending email to all listed users in mongodb.
-const sendMailToList = async (listOfBooksPrev,titles) => {
+export const sendMailToList = async (listOfBooksPrev,titles) => {
     try {
         const user = await Users.find({type:"user"});
         let listOfBooks = [];

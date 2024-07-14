@@ -11,7 +11,7 @@ import { Users } from "../models/Users.js";
 
 export const register = catchAsyncError(async(req, res, next)=> {
 
-    const { username, email, password } = req.body;
+    const { username, email, password, type } = req.body;
     
     if(!username || !email || !password) 
     return next(new ErrorHandler("Enter all fields", 400));
@@ -24,6 +24,7 @@ export const register = catchAsyncError(async(req, res, next)=> {
         username,
         email,
         password,
+        type,
     })
 
     sendToken(res, user, "Registered Successfully.", 201);

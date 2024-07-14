@@ -3,6 +3,7 @@ import ErrorHandler from "../utils/errorHandler.js"
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "cloudinary";
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
+import { sendMailToList } from "./bookUpdates.controller.js";
 
 export const getAllBooks = async (req, res, next) => {
     const books = await Books.find();
@@ -15,7 +16,7 @@ export const getAllBooks = async (req, res, next) => {
 export const addBook = catchAsyncError(async(req, res, next)=> {
 
     const { ISBN, title, author, publisher, year, genre, quantity, available } = req.body;
-    
+
     if(!ISBN || !title || !author || !publisher || !year || !genre || !quantity || !available) 
         return next(new ErrorHandler("Enter all fields", 400));
 
@@ -58,7 +59,7 @@ export const addBook = catchAsyncError(async(req, res, next)=> {
         available,
         images
     });
-
+    sendMailToList([books.title],[]);
     res.status(200).json({
     success: true,
     books,
@@ -81,45 +82,28 @@ export const removeBook = catchAsyncError(async(req, res, next)=> {
     });
 });
 
-// export const updateBook = catchAsyncError(async (req, res, next)=> {
+export const updateBook = catchAsyncError(async (req, res, next)=> {
     
-//     const { ISBN, title, author, publisher, year, genre, quantity, available } = req.body;
+    const { ISBN, title, author, publisher, year, genre, quantity, available } = req.body;
 
-//     const room = await Rooms.findById(req.body._id);
-//     if(!room)
-//         return next(new ErrorHandler("Room Not Found", 400));
+    if(!ISBN) 
+        return next(new ErrorHandler("Enter ISBN No.", 400));
+    const book = await Books.findOne({"ISBN" : ISBN});
+    if(!book)
+        return next(new ErrorHandler("Book Not Found", 400));
     
-//     if(SharingCapacity) room.SharingCapacity = SharingCapacity;
-//     if(Propertyid) room.Propertyid = Propertyid;
-//     if(MonthlyRent) room.MonthlyRent = MonthlyRent;
-//     if(Occupied) room.Occupied = Occupied;
-//     if(facilities) {
-//         const myArray = facilities.split(",");
-//         room.facilities = myArray;
-//     }
-//     if(description) room.description = description;
+    if(title) book.title = title;
+    if(author) book.author = author;
+    if(publisher) book.publisher = publisher;
+    if(year) book.year = year;
+    if(genre) book.genre = genre;
+    if(quantity) book.quantity = quantity;
+    if(available) book.available = available;
 
+    await book.save();
 
-//     await room.save();
-
-//     res.status(200).json({
-//         success: true,
-//         message: `Update Room ${req.body._id} Successfully`
-//     });
-// });
-
-
-// export const getAvaiableRooms = catchAsyncError(async (req, res, next)=> {
-
-//     const propertyid = req.body.Propertyid;
-
-//     const rooms = await Rooms.find({
-//         Propertyid: propertyid,
-//         $expr: { $lt: ["$Occupied", "$SharingCapacity"] }
-//     });
-
-//     res.status(200).json({
-//         success: true,
-//         rooms,
-//     });
-// });
+    res.status(200).json({
+        success: true,
+        message: `Update book ${ISBN} Successfully`
+    });
+});
