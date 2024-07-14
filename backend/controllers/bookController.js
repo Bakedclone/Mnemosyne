@@ -11,18 +11,17 @@ export const getAllBooks = async (req, res, next) => {
     });
 };
 
-export const addRooms = catchAsyncError(async(req, res, next)=> {
+export const addBook = catchAsyncError(async(req, res, next)=> {
 
     const { ISBN, title, author, publisher, year, genre, quantity, available } = req.body;
     
     if(!ISBN || !title || !author || !publisher || !year || !genre || !quantity || !available) 
         return next(new ErrorHandler("Enter all fields", 400));
 
-    const findbook = await Books.findById(ISBN);
+    const findbook = await Books.find({"ISBN" : ISBN});
 
-    if(findbook)
+    if(findbook.length > 0)
     return next(new ErrorHandler("ISBN is already exsist", 400));
-
 
     const books = await Books.create({
         ISBN, 
@@ -37,7 +36,7 @@ export const addRooms = catchAsyncError(async(req, res, next)=> {
 
     res.status(200).json({
     success: true,
-    room,
+    books,
     message: "New Book added Successfully."
     });
 });

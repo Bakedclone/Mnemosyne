@@ -21,8 +21,10 @@ app.use(express.urlencoded({
 
 // Importing & Using Router
 import users from "./routes/usersRoutes.js";
+import books from "./routes/booksRoutes.js";
 
 app.use("/api/v1", users);
+app.use("/api/v1", books);
 
 
 app.get("/", (req, res) =>

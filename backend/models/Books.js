@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
 
-    
     ISBN:{
         type:String,
         required:[true, "Please enter your ISBN No."],

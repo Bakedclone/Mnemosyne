@@ -1,7 +1,7 @@
 import express from "express";
 // import { addRooms, getAllRooms, getAvaiableRooms,removeRoom, updateRoom } from "../controllers/roomController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
-
+import { addBook } from "../controllers/bookController.js";
 const router = express.Router();
 
 // Add Book
