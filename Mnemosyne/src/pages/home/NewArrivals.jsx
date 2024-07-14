@@ -3,7 +3,7 @@ import useFetch from "@/src/utils/useFetch";
 
 const NewArrivals = () => {
   const { data, loading } = useFetch(
-    `?q=subject:fiction&orderBy=relevance&maxResults=5&startIndex=0`
+    `?q=subject:fiction&orderBy=newest&maxResults=5&startIndex=0`
   );
 
   if (loading) {
