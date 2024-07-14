@@ -24,7 +24,7 @@ export const bookSlice = createSlice({
     },
     getAllBooksSuccess: (state, action) => {
       state.loading = false;
-      state.allbooks = action.payload.books;
+      state.book = action.payload.books;
     },
     getAllBooksFail: (state, action) => {
       state.loading = false;

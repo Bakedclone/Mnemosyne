@@ -18,6 +18,6 @@ router.route("/removebook").post(isAuthenticated, authorizeAdmin, removeBook);
 // router.route("/availablerooms").post(isAuthenticated, authorizeAdmin, getAvaiableRooms);
 
 // Get All Books
-router.route("/getallbooks").get(isAuthenticated, authorizeAdmin, getAllBooks);
+router.route("/getallbooks").get(getAllBooks);
 
 export default router;

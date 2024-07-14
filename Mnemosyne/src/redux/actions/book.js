@@ -9,6 +9,7 @@ export const getAllBooks = () => async (dispatch) => {
         const { data } = await axios.get(`${server}/getallbooks`, {
             withCredentials: true,
         });
+        console.log(data);
         dispatch(getAllBooksSuccess(data));
     } catch (error) { 
         dispatch(getAllBooksFail(error.response.data.message));
