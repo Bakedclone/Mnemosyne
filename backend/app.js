@@ -22,10 +22,11 @@ app.use(express.urlencoded({
 // Importing & Using Router
 import users from "./routes/usersRoutes.js";
 import bookUpdates from "./routes/bookUpdates.routes.js";
+import books from "./routes/booksRoutes.js";
 
 app.use("/api/v1", users);
+app.use("/api/v1", books);
 app.use("/api/v1", bookUpdates);
-
 
 app.get("/", (req, res) =>
     res.send(
